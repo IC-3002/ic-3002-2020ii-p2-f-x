@@ -1,5 +1,5 @@
 from dominio import Dominio
-
+import csv
 
 class DominioTSP(Dominio):
     """
@@ -45,8 +45,22 @@ class DominioTSP(Dominio):
             Una instancia de DominioTSP correctamente inicializada.
         """
 
-        # Pendiente: implementar este constructor
-        pass
+        self.matriz = []
+        
+        with open(ciudades_rutacsv) as f:
+            lectura = csv.reader(f, delimiter = ',')
+
+            for row in lectura:
+                self.matriz.append(row[1:])
+        
+        self.ciudades = self.matriz[0]
+        self.pos_ciudad_inicio = self.ciudades.index(ciudad_inicio)
+        self.cantidad_ciudades = len(self.ciudades)
+        self.recorrido = self.matriz[self.pos_ciudad_inicio+1]
+
+        print(ciudad_inicio, self.recorrido)
+        #print(self.ciudades)
+        #print(self.matriz)
 
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
