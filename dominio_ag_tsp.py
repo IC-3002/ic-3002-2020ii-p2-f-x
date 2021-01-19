@@ -41,8 +41,8 @@ class DominioAGTSP(DominioAG, DominioTSP):
             Una instancia de DominioAGTSP correctamente inicializada.
         """
         
-        # Pendiente: implementar este constructor
-        pass
+        #usa los atributos de dominio_tsp
+        DominioTSP.__init__(self, ciudades_rutacsv, ciudad_inicio) 
 
     def generar_n(self, n):
         """Construye aleatoriamente una lista de listas que representa n 
@@ -57,8 +57,16 @@ class DominioAGTSP(DominioAG, DominioTSP):
         una posible solución al problema modelado por el objeto de dominio.
         """
         
-        # Pendiente: implementar este método
-        pass
+        #implementa las funcion que ya existe de generar en dominio_tsp para calcular las soluciones
+  
+        
+        posibles_soluciones = []
+
+        while n > 0:
+            posibles_soluciones += [DominioTSP.generar(self)]
+            n -= 1
+
+        return posibles_soluciones
 
     def cruzar(self, sol_a, sol_b):
         """Produce una nueva posible solución cruzando las dos soluciones dadas por parámetro.
@@ -74,8 +82,18 @@ class DominioAGTSP(DominioAG, DominioTSP):
         (estructura de datos) Una nueva solución producto del cruzamiento entre las soluciones A y B
         """
 
-        # Pendiente: implementar este método
-        pass
+        #Se parte la mitad de la solución a, y despues se le agregan a esa solución los que falten que estén en la solución b
+        half = len(sol_a)//2
+        solve = sol_a[:mitad]
+        
+        for ciudad in sol_b:
+            if ciudad not in solve:
+                solve.append(ciudad)
+                if len(solve) == len(sol_a):
+                    break
+            
+            
+        return solve
 
     def mutar(self, sol):
         """Produce una nueva solución aplicando un ligero cambio a la solución dada por
@@ -90,5 +108,11 @@ class DominioAGTSP(DominioAG, DominioTSP):
         a la solución dada por parámetro
         """
 
-        # Pendiente: implementar este método
-        pass
+        #Se cambia una posicion de la primeraq mitad de la lista por una de la segunda mitad
+        len_half = len(sol) // 2  
+        temp1 = random.randint(0,mitad_largo-1) 
+        temp2 = random.randint(mitad_largo,len(sol)-1)
+        new_solve = sol[:]
+        new_solve[temp1],new_solve[temp2] = new_solve[temp2],new_solve[temp1]
+
+        return new_solve

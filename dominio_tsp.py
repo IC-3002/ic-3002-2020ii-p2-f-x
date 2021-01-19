@@ -110,8 +110,10 @@ class DominioTSP(Dominio):
         (list) Una lista que representa una solución válida para esta instancia del vendedor viajero
         """
 
-        # Pendiente: implementar este método
-        pass
+        lista = [i for i in range(0, self.cant_ciudades)]       #Se crea una lista secuencial de enteros y luego se revuelve la lista
+        lista.remove(self.num_inicio)                           
+        random.shuffle(lista)                                   
+        return lista
 
     def fcosto(self, sol):
         """Calcula el costo asociado con una solución dada.
