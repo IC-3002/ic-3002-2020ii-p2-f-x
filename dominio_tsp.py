@@ -46,7 +46,8 @@ class DominioTSP(Dominio):
         """
 
         self.matriz = []
-        
+        self.costos = []
+
         with open(ciudades_rutacsv) as f:
             lectura = csv.reader(f, delimiter = ',')
 
@@ -57,8 +58,11 @@ class DominioTSP(Dominio):
         self.pos_ciudad_inicio = self.ciudades.index(ciudad_inicio)
         self.cantidad_ciudades = len(self.ciudades)
         self.recorrido = self.matriz[self.pos_ciudad_inicio+1]
+        self.costos = self.matriz[1:]
 
-        print(ciudad_inicio, self.recorrido)
+
+        print(self.costos)
+        #print(ciudad_inicio, self.recorrido)
         #print(self.ciudades)
         #print(self.matriz)
 
@@ -78,9 +82,41 @@ class DominioTSP(Dominio):
         Salidas:
         (bool) True si la solución es válida, False en cualquier otro caso
         """
+        tamano = len(sol)
 
-        # Pendiente: implementar este método
-        pass
+        if tamano == (self.cantidad_ciudades-1):
+            
+            for i in sol:
+
+                if i == self.pos_ciudad_inicio:
+                    
+                    return False
+                
+                elif type(i) != int:
+
+                    return False
+                
+                elif i > (self.cantidad_ciudades-1) or i < 0:
+
+                    return False
+
+            repetidos = []
+            for j in sol:
+
+                if j not in repetidos:
+
+                    repetidos.append(j)
+
+                else:
+
+                    return False
+            
+        
+            return True
+
+        else:
+
+            return False
 
     def texto(self, sol):
         """Construye una representación en hilera legible por humanos de la solución
@@ -96,7 +132,7 @@ class DominioTSP(Dominio):
         Salidas:
         (str) Hilera en el formato mencionado anteriormente.
         """
-
+        
         # Pendiente: implementar este método
         pass
 
