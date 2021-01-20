@@ -190,5 +190,11 @@ class DominioTSP(Dominio):
         (list) Solución vecina
         """
 
-        # Pendiente: implementar este método
-        pass
+        vecino = sol[:]
+        mitad_sol = len(sol) // 2
+        temp1 = random.randint(0,mitad_sol-1) 
+        temp2 = random.randint(mitad_sol,len(sol)-1)
+        vecino[temp1],vecino[temp2] = vecino[temp2],vecino[temp1]
+
+        return vecino
+      
