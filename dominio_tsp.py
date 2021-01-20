@@ -1,5 +1,6 @@
 from dominio import Dominio
 import csv
+import random
 
 class DominioTSP(Dominio):
     """
@@ -146,8 +147,10 @@ class DominioTSP(Dominio):
         (list) Una lista que representa una solución válida para esta instancia del vendedor viajero
         """
 
-        # Pendiente: implementar este método
-        pass
+        lista = [i for i in range(0, self.cantidad_ciudades)]       
+        lista.remove(self.pos_ciudad_inicio)                           
+        random.shuffle(lista)                                   
+        return lista
 
     def fcosto(self, sol):
         """Calcula el costo asociado con una solución dada.
@@ -159,10 +162,16 @@ class DominioTSP(Dominio):
         Salidas:
         (float) valor del costo asociado con la solución
         """
-
-        # Pendiente: implementar este método
-        pass
-
+        costo = 0
+        ciudad = self.pos_ciudad_inicio
+        
+        for i in range(0, len(sol)):
+          costo += float(self.costos[ciudad][sol[i]])
+          ciudad = sol[i]
+        
+        costo += float(self.costos[ciudad][self.pos_ciudad_inicio])
+        return costo
+        
     def vecino(self, sol):
         """Calcula una solución vecina a partir de una solución dada.
 
