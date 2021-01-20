@@ -109,11 +109,11 @@ class DominioAGTSP(DominioAG, DominioTSP):
         a la solución dada por parámetro
         """
 
-        #Se cambia una posicion de la primeraq mitad de la lista por una de la segunda mitad
+        #Se cambia una posicion de la primera mitad de la lista por una de la segunda mitad
         mitad_largo = len(sol) // 2  
         temp1 = random.randint(0,mitad_largo-1) 
         temp2 = random.randint(mitad_largo,len(sol)-1)
-        new_solve = sol
+        new_solve = sol[:]
         new_solve[temp1],new_solve[temp2] = new_solve[temp2],new_solve[temp1]
 
         return new_solve
