@@ -139,8 +139,6 @@ class DominioTSP(Dominio):
 
         return " -> ".join(ciudades)
 
-        pass
-
     def generar(self):
         """Construye aleatoriamente una lista que representa una posible solución al problema.
 
