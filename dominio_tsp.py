@@ -61,12 +61,6 @@ class DominioTSP(Dominio):
         self.recorrido = self.matriz[self.pos_ciudad_inicio+1]
         self.costos = self.matriz[1:]
 
-
-        print(self.costos)
-        #print(ciudad_inicio, self.recorrido)
-        #print(self.ciudades)
-        #print(self.matriz)
-
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
 
