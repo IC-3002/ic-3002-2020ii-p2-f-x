@@ -115,6 +115,20 @@ class DominioTSP(Dominio):
 
     def texto(self, sol):
         
+        """Construye una representacion en hilera legible por humanos de la solucion
+        con el fin de reportar resultados al usuario final.
+
+        La hilera cumple con el siguiente formato:
+        Nombre ciudad inicio -> Nombre ciudad 1 -> ... -> Nombre ciudad n -> Nombre ciudad inicio
+
+        Entradas:
+        sol (list)
+            Solucion a representar como texto legible
+
+        Salidas:
+        (str) Hilera en el formato mencionado anteriormente.
+        """
+
         ciudades = []
         ciudades.append(self.ciudades[self.pos_ciudad_inicio])
 
