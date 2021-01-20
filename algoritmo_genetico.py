@@ -33,7 +33,7 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
         poblacion_costo = []
         
         for solve in poblacion:
-            poblacion_costo.append((solve, dominio.fcosto(solsolve)))
+            poblacion_costo.append((solve, dominio.fcosto(solve)))
         
         poblacion_costo.sort(key = itemgetter(1))
         

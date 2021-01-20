@@ -1,5 +1,6 @@
 from dominio_ag import DominioAG
 from dominio_tsp import DominioTSP
+import random
 
 class DominioAGTSP(DominioAG, DominioTSP):
     """
@@ -83,7 +84,7 @@ class DominioAGTSP(DominioAG, DominioTSP):
         """
 
         #Se parte la mitad de la solución a, y despues se le agregan a esa solución los que falten que estén en la solución b
-        half = len(sol_a)//2
+        mitad = len(sol_a)//2
         solve = sol_a[:mitad]
         
         for ciudad in sol_b:
@@ -109,10 +110,10 @@ class DominioAGTSP(DominioAG, DominioTSP):
         """
 
         #Se cambia una posicion de la primeraq mitad de la lista por una de la segunda mitad
-        len_half = len(sol) // 2  
+        mitad_largo = len(sol) // 2  
         temp1 = random.randint(0,mitad_largo-1) 
         temp2 = random.randint(mitad_largo,len(sol)-1)
-        new_solve = sol[:]
+        new_solve = sol
         new_solve[temp1],new_solve[temp2] = new_solve[temp2],new_solve[temp1]
 
         return new_solve
