@@ -48,8 +48,12 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
         while cant_hijos > 0:
             padre1 = sig_generacion[random.randint(0, len(sig_generacion) -1)]
             padre2 = sig_generacion[random.randint(0, len(sig_generacion) -1)]
+            
+            if padre1 == padre2:
+                padre1 = sig_generacion[random.randint(0, len(sig_generacion) -1)]
+
             hijo = dominio.cruzar(padre1, padre2)
-            probabilidad = random.random()
+            probabilidad = random.uniform(0,1)
             if probabilidad <= prob_mut:
                 hijo = dominio.mutar(hijo)
             descendencia.append(hijo)
@@ -57,7 +61,8 @@ def optimizar(dominio, tam_pobl, porc_elite, prob_mut, reps):
         
         for hijos in descendencia:
             sig_generacion.append(hijos)
-        probabilidad = sig_generacion
+
+        poblacion = sig_generacion
         reps -= 1
     
     #Si se vuelve a ordenar se podia saber si en la última descendencia hay una mejor solucion que en la anterior
