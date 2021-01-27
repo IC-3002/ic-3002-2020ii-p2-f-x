@@ -1,5 +1,6 @@
 from dominio import Dominio
-
+import csv
+import random
 
 class DominioTSP(Dominio):
     """
@@ -45,8 +46,20 @@ class DominioTSP(Dominio):
             Una instancia de DominioTSP correctamente inicializada.
         """
 
-        # Pendiente: implementar este constructor
-        pass
+        self.matriz = []
+        self.costos = []
+
+        with open(ciudades_rutacsv) as f:
+            lectura = csv.reader(f, delimiter = ',')
+
+            for row in lectura:
+                self.matriz.append(row[1:])
+        
+        self.ciudades = self.matriz[0]
+        self.pos_ciudad_inicio = self.ciudades.index(ciudad_inicio)
+        self.cantidad_ciudades = len(self.ciudades)
+        self.recorrido = self.matriz[self.pos_ciudad_inicio+1]
+        self.costos = self.matriz[1:]
 
     def validar(self, sol):
         """Valida que la solución dada cumple con los requisitos del problema.
@@ -64,12 +77,45 @@ class DominioTSP(Dominio):
         Salidas:
         (bool) True si la solución es válida, False en cualquier otro caso
         """
+        tamano = len(sol)
 
-        # Pendiente: implementar este método
-        pass
+        if tamano == (self.cantidad_ciudades-1):
+            
+            for i in sol:
+
+                if i == self.pos_ciudad_inicio:
+                    
+                    return False
+                
+                elif type(i) != int:
+
+                    return False
+                
+                elif i > (self.cantidad_ciudades-1) or i < 0:
+
+                    return False
+
+            repetidos = []
+            for j in sol:
+
+                if j not in repetidos:
+
+                    repetidos.append(j)
+
+                else:
+
+                    return False
+            
+        
+            return True
+
+        else:
+
+            return False
 
     def texto(self, sol):
-        """Construye una representación en hilera legible por humanos de la solución
+        
+        """Construye una representacion en hilera legible por humanos de la solucion
         con el fin de reportar resultados al usuario final.
 
         La hilera cumple con el siguiente formato:
@@ -77,14 +123,21 @@ class DominioTSP(Dominio):
 
         Entradas:
         sol (list)
-            Solución a representar como texto legible
+            Solucion a representar como texto legible
 
         Salidas:
         (str) Hilera en el formato mencionado anteriormente.
         """
 
-        # Pendiente: implementar este método
-        pass
+        ciudades = []
+        ciudades.append(self.ciudades[self.pos_ciudad_inicio])
+
+        for i in sol:
+            ciudades.append(self.ciudades[i])
+
+        ciudades.append(self.ciudades[self.pos_ciudad_inicio])
+
+        return " -> ".join(ciudades)
 
     def generar(self):
         """Construye aleatoriamente una lista que representa una posible solución al problema.
@@ -96,8 +149,10 @@ class DominioTSP(Dominio):
         (list) Una lista que representa una solución válida para esta instancia del vendedor viajero
         """
 
-        # Pendiente: implementar este método
-        pass
+        lista = [i for i in range(0, self.cantidad_ciudades)]       
+        lista.remove(self.pos_ciudad_inicio)                           
+        random.shuffle(lista)                                   
+        return lista
 
     def fcosto(self, sol):
         """Calcula el costo asociado con una solución dada.
@@ -109,10 +164,16 @@ class DominioTSP(Dominio):
         Salidas:
         (float) valor del costo asociado con la solución
         """
-
-        # Pendiente: implementar este método
-        pass
-
+        costo = 0
+        ciudad = self.pos_ciudad_inicio
+        
+        for i in range(0, len(sol)):
+          costo += float(self.costos[ciudad][sol[i]])
+          ciudad = sol[i]
+        
+        costo += float(self.costos[ciudad][self.pos_ciudad_inicio])
+        return costo
+        
     def vecino(self, sol):
         """Calcula una solución vecina a partir de una solución dada.
 
@@ -129,5 +190,11 @@ class DominioTSP(Dominio):
         (list) Solución vecina
         """
 
-        # Pendiente: implementar este método
-        pass
+        vecino = sol[:]
+        mitad_sol = len(sol) // 2
+        temp1 = random.randint(0,mitad_sol-1) 
+        temp2 = random.randint(mitad_sol,len(sol)-1)
+        vecino[temp1],vecino[temp2] = vecino[temp2],vecino[temp1]
+
+        return vecino
+      
